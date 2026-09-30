@@ -1,0 +1,56 @@
+{
+  "form": {
+    "params": {
+      "learning_rate": 0.05,
+      "max_depth": 3,
+      "subsample": 1.0,
+      "colsample_bytree": 1.0,
+      "min_child_weight": 1
+    },
+    "n_estimators": 37,
+    "columns": [
+      "home_last_5_points",
+      "away_last_5_points",
+      "home_last_5_goals_for",
+      "away_last_5_goals_for",
+      "home_last_5_goals_against",
+      "away_last_5_goals_against"
+    ]
+  },
+  "odds": {
+    "params": {
+      "learning_rate": 0.03,
+      "max_depth": 3,
+      "subsample": 0.8,
+      "colsample_bytree": 1.0,
+      "min_child_weight": 4
+    },
+    "n_estimators": 60,
+    "columns": [
+      "home_implied_prob",
+      "draw_implied_prob",
+      "away_implied_prob"
+    ]
+  },
+  "both": {
+    "params": {
+      "learning_rate": 0.05,
+      "max_depth": 3,
+      "subsample": 0.8,
+      "colsample_bytree": 1.0,
+      "min_child_weight": 4
+    },
+    "n_estimators": 36,
+    "columns": [
+      "home_last_5_points",
+      "away_last_5_points",
+      "home_last_5_goals_for",
+      "away_last_5_goals_for",
+      "home_last_5_goals_against",
+      "away_last_5_goals_against",
+      "home_implied_prob",
+      "draw_implied_prob",
+      "away_implied_prob"
+    ]
+  }
+}

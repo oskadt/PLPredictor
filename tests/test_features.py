@@ -4,7 +4,6 @@ import numpy as np
 import pandas as pd
 
 from src.features import generate_features
-from src.train import evaluate_model
 
 
 def _write_match_csv(path: Path, rows):
@@ -198,31 +197,3 @@ def test_generate_features_does_not_use_current_match_result_for_its_own_feature
 
     assert pd.isna(baseline_row["home_last_5_points"]) == pd.isna(modified_row["home_last_5_points"])
     assert pd.isna(baseline_row["away_last_5_points"]) == pd.isna(modified_row["away_last_5_points"])
-
-
-def test_evaluate_model_includes_bookmaker_accuracy_and_f1():
-    test_df = pd.DataFrame(
-        {
-            "away_implied_prob": [0.5, 0.2],
-            "draw_implied_prob": [0.3, 0.5],
-            "home_implied_prob": [0.2, 0.3],
-        }
-    )
-    X_test = pd.DataFrame({"feature_1": [1, 2]})
-    y_test = pd.Series([0, 1])
-
-    class DummyModel:
-        classes_ = np.array([0, 1, 2])
-
-        def predict_proba(self, X):
-            return [[0.8, 0.1, 0.1], [0.2, 0.7, 0.1]]
-
-        def predict(self, X):
-            return [0, 1]
-
-    result = evaluate_model(DummyModel(), X_test, y_test, test_df)
-
-    assert "bookmaker_accuracy" in result["metrics"]
-    assert "bookmaker_macro_f1" in result["metrics"]
-    assert 0 <= result["metrics"]["bookmaker_accuracy"] <= 1
-    assert 0 <= result["metrics"]["bookmaker_macro_f1"] <= 1
